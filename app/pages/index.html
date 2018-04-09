@@ -1,0 +1,121 @@
+<html>
+  <head>
+    <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+    <script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>
+    <!-- <script src="https://rawgit.com/rdub80/aframe-gui/master/dist/aframe-gui.min.js"></script> -->
+    <script src='https://surikov.github.io/webaudiofont/npm/dist/WebAudioFontPlayer.js'></script>
+    <script src='https://surikov.github.io/webaudiofontdata/sound/0000_Aspirin_sf2_file.js'></script>
+    <script>
+			var AudioContextFunc = window.AudioContext || window.webkitAudioContext;
+			var audioContext = new AudioContextFunc();
+			var player = new WebAudioFontPlayer();
+			player.loader.decodeAfterLoading(audioContext, '_tone_0090_JCLive_sf2_file');
+			function playKey(pitch){
+				player.queueWaveTable(audioContext, audioContext.destination, _tone_0000_Aspirin_sf2_file, 0, pitch, 0.75);
+			}
+    </script>
+  </head>
+  <body>
+    <a-scene cursor="rayOrigin: mouse">
+
+      <!-- <a-box position="0 0.5 -3" rotation="0 45 0" scale="0.5 0.5 0.5" color="#4CC3D9"></a-box> -->
+      <!-- <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
+      <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder> -->
+      <a-entity>
+      <a-plane position="0 0 -4" rotation="-90 0 0" width="20" height="20" color="#808080"></a-plane>
+      <a-sky color="#ECECEC"></a-sky>
+
+      <a-entity position="-3 2 -6" rotation="0 -135 0">
+        <a-camera>
+          <a-cursor color="#FF0000"/>
+        </a-camera>
+      </a-entity>
+    </a-scene>
+
+    <script>
+      // Get the scene for adding elements to
+      var scene = document.querySelector('a-scene');
+
+      // Set offsets for object positions
+      var xOffset = 0.6;
+      var yOffset = 0.6;
+      var zOffset = 0.6;
+
+      // Loop, creating and adding blocks
+      for(var i = 0; i < 3; i++) {
+        for(var j = 0; j < 3; j++) {
+          for(var k = 0; k < 3; k++) {
+            // Create/calculate instance specific attributes
+            var id = "box_[" + i + "," + j + "," + k +"]";
+            var x = 0 + (xOffset * i);
+            var y = 0.5 + (yOffset * j);
+            var z = -3 + (zOffset * k);
+
+            // Create new box
+            var box = document.createElement('a-box');
+
+            // Identification attributes
+            box.className = "chordBlocks";
+            box.setAttribute("id", id);
+
+            // A-frame element attributes
+            box.setAttribute("position", {
+              x: x,
+              y: y,
+              z: z
+            });
+            box.setAttribute("rotation","0 0 0");
+            box.setAttribute("scale","0.5 0.5 0.5");
+            box.setAttribute("color","#4CC3D9");
+
+            // Add the block to the scene
+            scene.appendChild(box);
+          } // End z loop
+        } // End y loop
+      } // End x loop
+
+      // Get all chordBlocks
+      var allChordBlocks = document.getElementsByClassName("chordBlocks");
+
+      // Mouse enter function
+      var scaleEnterFunction = function() {
+        this.setAttribute("scale", {
+            x: 0.52,
+            y: 0.52,
+            z: 0.52
+        });
+      };
+
+      // Mouse leave function
+      var scaleLeaveFunction = function() {
+        this.setAttribute("scale", {
+            x: 0.5,
+            y: 0.5,
+            z: 0.5
+        });
+      };
+
+      // Mouse click function
+      var blockClicked = function() {
+        this.setAttribute("clicked", "true");
+        this.setAttribute("color", "#FF0000");
+      };
+
+      for (var i = 0; i < allChordBlocks.length; i++) {
+        allChordBlocks[i].addEventListener("mouseenter", scaleEnterFunction);
+        allChordBlocks[i].addEventListener("mouseleave", scaleLeaveFunction);
+        allChordBlocks[i].addEventListener("click", blockClicked);
+      }
+      //var box = document.querySelector('a-box');
+      //box.addEventListener("mouseenter", );
+      // box.addEventListener("mouseleave", function() {
+      //   box.setAttribute("scale",
+      //   {
+      //       x: 0.5,
+      //       y: 0.5,
+      //       z: 0.5
+      //   });
+      // });
+    </script>
+  </body>
+</html>
