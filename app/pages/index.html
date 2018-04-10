@@ -19,9 +19,14 @@
         f_5: 5*12+6, g5: 5*12+7, g_5: 5*12+8, a5: 5*12+9, a_5: 5*12+10, b5: 5*12+11
       };
 
-      // var chords = {
-      //   cmaj : { r: notes.c4, t: notes.e4, f: notes.g4 }
-      // };
+      var chords = {
+        cmaj : { r: notes.c4, t: notes.e4, f: notes.g4 },
+        dmin : { r: notes.d4, t: notes.f4, f: notes.a4 },
+        emin : { r: notes.e4, t: notes.g4, f: notes.b4 },
+        fmaj : { r: notes.f4, t: notes.a4, f: notes.c5 },
+        gmaj : { r: notes.g4, t: notes.b4, f: notes.d5 },
+        bdim : { r: notes.b4, t: notes.d5, f: notes.f5 }
+      };
 
       //
 			function playKey(pitch){
@@ -45,7 +50,7 @@
       <a-plane position="0 0 -4" rotation="-90 0 0" width="20" height="20" color="#808080"></a-plane>
       <a-sky color="#ECECEC"></a-sky>
 
-      <a-entity position="-3 2 -6" rotation="0 -135 0">
+      <a-entity position="-3 3 -6" rotation="0 -135 0">
         <a-camera>
           <a-cursor color="#FF0000"/>
         </a-camera>
@@ -106,6 +111,7 @@
             y: 0.52,
             z: 0.52
         });
+        this.setAttribute("color", "#FF0000");
       };
 
       // Mouse leave function
@@ -115,15 +121,20 @@
             y: 0.5,
             z: 0.5
         });
+        this.setAttribute("color","#4CC3D9");
       };
 
       // Mouse click function
       var blockClicked = function() {
+        var bi = this.getAttribute("id");
+        var r = chords.dmin.r;
+        var t = chords.dmin.t;
+        var f = chords.dmin.f;
         // this.setAttribute("clicked", "true");
-        // this.setAttribute("color", "#FF0000");
-        playChord(notes.c4, notes.e4, notes.a4);
+        //playChord(notes.c4, notes.e4, notes.a4);
         //playKey(4*12+0);
-        //playChord(r, t, f)
+        console.log("Block ID: " + bi);
+        playChord(r, t, f);
       };
 
       for (var i = 0; i < allChordBlocks.length; i++) {
