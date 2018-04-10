@@ -6,13 +6,33 @@
     <script src='https://surikov.github.io/webaudiofont/npm/dist/WebAudioFontPlayer.js'></script>
     <script src='https://surikov.github.io/webaudiofontdata/sound/0000_Aspirin_sf2_file.js'></script>
     <script>
+      // Initialise webAudioFont
 			var AudioContextFunc = window.AudioContext || window.webkitAudioContext;
 			var audioContext = new AudioContextFunc();
 			var player = new WebAudioFontPlayer();
 			player.loader.decodeAfterLoading(audioContext, '_tone_0090_JCLive_sf2_file');
+
+      var notes = {
+        c4: 4*12+0, c_4: 4*12+1, d4: 4*12+2, c_4: 4*12+3, e4: 4*12+4, f4: 4*12+5,
+        f_4: 4*12+6, g4: 4*12+7, g_4: 4*12+8, a4: 4*12+9, a_4: 4*12+10, b4: 4*12+11,
+        c5: 5*12+0, c_5: 5*12+1, d5: 5*12+2, c_5: 5*12+3, e5: 5*12+4, f5: 5*12+5,
+        f_5: 5*12+6, g5: 5*12+7, g_5: 5*12+8, a5: 5*12+9, a_5: 5*12+10, b5: 5*12+11
+      };
+
+      // var chords = {
+      //   cmaj : { r: notes.c4, t: notes.e4, f: notes.g4 }
+      // };
+
+      //
 			function playKey(pitch){
 				player.queueWaveTable(audioContext, audioContext.destination, _tone_0000_Aspirin_sf2_file, 0, pitch, 0.75);
 			}
+
+      function playChord(r, t, f) {
+        playKey(r);
+        playKey(t);
+        playKey(f);
+      }
     </script>
   </head>
   <body>
@@ -36,15 +56,17 @@
       // Get the scene for adding elements to
       var scene = document.querySelector('a-scene');
 
+      var iSize = 3;
+
       // Set offsets for object positions
       var xOffset = 0.6;
       var yOffset = 0.6;
       var zOffset = 0.6;
 
       // Loop, creating and adding blocks
-      for(var i = 0; i < 3; i++) {
-        for(var j = 0; j < 3; j++) {
-          for(var k = 0; k < 3; k++) {
+      for(var i = 0; i < iSize; i++) {
+        for(var j = 0; j < iSize; j++) {
+          for(var k = 0; k < iSize; k++) {
             // Create/calculate instance specific attributes
             var id = "box_[" + i + "," + j + "," + k +"]";
             var x = 0 + (xOffset * i);
@@ -97,8 +119,11 @@
 
       // Mouse click function
       var blockClicked = function() {
-        this.setAttribute("clicked", "true");
-        this.setAttribute("color", "#FF0000");
+        // this.setAttribute("clicked", "true");
+        // this.setAttribute("color", "#FF0000");
+        playChord(notes.c4, notes.e4, notes.a4);
+        //playKey(4*12+0);
+        //playChord(r, t, f)
       };
 
       for (var i = 0; i < allChordBlocks.length; i++) {
