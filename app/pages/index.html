@@ -2,6 +2,7 @@
   <head>
     <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
     <script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>
+
     <!-- <script src="https://rawgit.com/rdub80/aframe-gui/master/dist/aframe-gui.min.js"></script> -->
     <script src='https://surikov.github.io/webaudiofont/npm/dist/WebAudioFontPlayer.js'></script>
     <script src='https://surikov.github.io/webaudiofontdata/sound/0000_Aspirin_sf2_file.js'></script>
@@ -78,8 +79,10 @@
             var y = 0.5 + (yOffset * j);
             var z = -3 + (zOffset * k);
 
-            // Create new box
+            // Create elements
             var box = document.createElement('a-box');
+            var labelz = document.createElement('a-text');
+            var labelx = document.createElement('a-text');
 
             // Identification attributes
             box.className = "chordBlocks";
@@ -91,9 +94,28 @@
               y: y,
               z: z
             });
-            box.setAttribute("rotation","0 0 0");
+            box.setAttribute("rotation","0 180 0");
             box.setAttribute("scale","0.5 0.5 0.5");
             box.setAttribute("color","#4CC3D9");
+
+            labelz.setAttribute("value", id);
+            labelz.setAttribute("position", {
+              x: -0.6,
+              y: 0,
+              z: 0.5
+            });
+            labelz.setAttribute("wrap-count", 20);
+            //label.setAttribute("rotation","0 90 0");
+            labelx.setAttribute("value", id);
+            labelx.setAttribute("position", {
+              x: 0.5,
+              y: 0,
+              z: 0.5
+            });
+            labelx.setAttribute("rotation","0 90 0");
+
+            box.appendChild(labelz);
+            box.appendChild(labelx);
 
             // Add the block to the scene
             scene.appendChild(box);
@@ -137,21 +159,12 @@
         playChord(r, t, f);
       };
 
+      // Loop adding events to all blocks
       for (var i = 0; i < allChordBlocks.length; i++) {
         allChordBlocks[i].addEventListener("mouseenter", scaleEnterFunction);
         allChordBlocks[i].addEventListener("mouseleave", scaleLeaveFunction);
         allChordBlocks[i].addEventListener("click", blockClicked);
       }
-      //var box = document.querySelector('a-box');
-      //box.addEventListener("mouseenter", );
-      // box.addEventListener("mouseleave", function() {
-      //   box.setAttribute("scale",
-      //   {
-      //       x: 0.5,
-      //       y: 0.5,
-      //       z: 0.5
-      //   });
-      // });
     </script>
   </body>
 </html>
